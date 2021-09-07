@@ -16,6 +16,7 @@
 #import "NSData+AES256Encryption.h"
 #import "ShortcutsController.h"
 #import "ToastWindowController.h"
+#import <ServiceManagement/SMLoginItem.h>
 
 #define kUseAllServer -10
 
@@ -29,7 +30,7 @@
     NSTask* coreProcess;
     dispatch_source_t dispatchPacSource;
     FSEventStreamRef fsEventStream;
-    
+
     NSData* v2rayJSONconfig;
     ToastWindowController *tosat;
 }
@@ -63,12 +64,12 @@ static AppDelegate *appDelegate;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
-    
+
     // check helper
     if (![self installHelper:false]) {
         [[NSApplication sharedApplication] terminate:nil];// installation failed or stopped by user,
     };
-    
+
     // prepare directory
     NSFileManager* fileManager = [NSFileManager defaultManager];
     NSString *pacDir = [NSString stringWithFormat:@"%@/Library/Application Support/V2RayX/pac", NSHomeDirectory()];
@@ -82,7 +83,7 @@ static AppDelegate *appDelegate;
     [fileManager createDirectoryAtPath:logDirPath withIntermediateDirectories:YES attributes:nil error:nil];
     [fileManager createFileAtPath:[NSString stringWithFormat:@"%@/access.log", logDirPath] contents:nil attributes:nil];
     [fileManager createFileAtPath:[NSString stringWithFormat:@"%@/error.log", logDirPath] contents:nil attributes:nil];
-    
+
     // initialize variables
     NSNumber* setingVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"setingVersion"];
     if(setingVersion == nil || [setingVersion integerValue] != kV2RayXSettingVersion) {
@@ -91,17 +92,17 @@ static AppDelegate *appDelegate;
         [noServerAlert runModal];
         [self writeDefaultSettings]; //explicitly write default settings to user defaults file
     }
-    
+
     v2rayJSONconfig = [[NSData alloc] init];
     [self addObserver:self forKeyPath:@"selectedPacFileName" options:NSKeyValueObservingOptionNew context:nil];
-    
+
     // create a serial queue used for NSTask operations
     taskQueue = dispatch_queue_create("cenmrev.v2rayx.nstask", DISPATCH_QUEUE_SERIAL);
     // create a loop to run core
     coreLoopSemaphore = dispatch_semaphore_create(0);
     coreLoopQueue = dispatch_queue_create("cenmrev.v2rayx.coreloop", DISPATCH_QUEUE_SERIAL);
-    
-    
+
+
     dispatch_async(coreLoopQueue, ^{
         while (true) {
             dispatch_semaphore_wait(self->coreLoopSemaphore, DISPATCH_TIME_FOREVER);
@@ -122,7 +123,7 @@ static AppDelegate *appDelegate;
             NSLog(@"core exit with code %d", [self->coreProcess terminationStatus]);
         }
     });
-    
+
     // set up pac server
     __weak typeof(self) weakSelf = self;
     //http://stackoverflow.com/questions/14556605/capturing-self-strongly-in-this-block-is-likely-to-lead-to-a-retain-cycle
@@ -134,26 +135,26 @@ static AppDelegate *appDelegate;
         return [GCDWebServerDataResponse responseWithData:[weakSelf v2rayJSONconfig] contentType:@"application/json"];
     }];
     [webServer startWithPort:webServerPort bonjourName:nil];
-    
-    
+
+
     [self checkUpgrade:self];
-    
+
     appDelegate = self;
-    
+
     // resume the service when mac wakes up
     [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(didChangeStatus:) name:NSWorkspaceDidWakeNotification object:NULL];
-    
+
     // Register global hotkey
     [ShortcutsController bindShortcuts];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(hotkeyChangeProxyMode) name:@"NOTIFY_LOAD_UNLOAD_SHORTCUT" object:nil];
-    
+
     // initialize UI
     _statusBarItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
     [_statusBarItem setHighlightMode:YES];
     _pacModeItem.tag = pacMode;
     _globalModeItem.tag = globalMode;
     _manualModeItem.tag = manualMode;
-    
+
     // read defaults
     [self readDefaults];
     self.encryptionKey = @"";
@@ -214,7 +215,7 @@ static AppDelegate *appDelegate;
             return false;
         }
     }
-    
+
     NSMutableArray* decryptedProfiles = [[NSMutableArray alloc] init];
     for (NSString* encryptedJSON in profiles) {
         NSData* encryptedData = [[NSData alloc] initWithBase64EncodedString:encryptedJSON options:NSDataBase64DecodingIgnoreUnknownCharacters];
@@ -280,26 +281,26 @@ static AppDelegate *appDelegate;
     } else {
         [task setLaunchPath:kV2RayXHelper];
     }
-    
+
     NSArray *args;
     args = [NSArray arrayWithObjects:@"-v", nil];
     [task setArguments: args];
-    
+
     NSPipe *pipe;
     pipe = [NSPipe pipe];
     [task setStandardOutput:pipe];
-    
+
     NSFileHandle *fd;
     fd = [pipe fileHandleForReading];
-    
+
     [task launch];
-    
+
     NSData *data;
     data = [fd readDataToEndOfFile];
-    
+
     NSString *str;
     str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
+
     if (![str isEqualToString:VERSION]) {
         return NO;
     }
@@ -342,10 +343,11 @@ static AppDelegate *appDelegate;
 - (void)readDefaults {
     // just read defaults, didChangeStatus will handle invalid parameters.
     // return encrypted or not
-    
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSDictionary* appStatus = nilCoalescing([defaults objectForKey:@"appStatus"], @{});
-    
+    launchAtLogin = [nilCoalescing(appStatus[@"launchAtLogin"], @(NO)) boolValue];
+
     proxyState = [nilCoalescing(appStatus[@"proxyState"], @(NO)) boolValue]; //turn off proxy as default
     proxyMode = [nilCoalescing(appStatus[@"proxyMode"], @(manualMode)) integerValue];
     selectedServerIndex = [nilCoalescing(appStatus[@"selectedServerIndex"], @0) integerValue];
@@ -354,7 +356,7 @@ static AppDelegate *appDelegate;
     useMultipleServer = [nilCoalescing(appStatus[@"useMultipleServer"], @(NO)) boolValue];
     useCusProfile = [nilCoalescing(appStatus[@"useCusProfile"], @(NO)) boolValue];
     self.selectedPacFileName = nilCoalescing(appStatus[@"selectedPacFileName"], @"pac.js");
-    
+
     _enableEncryption = [nilCoalescing([defaults objectForKey:@"enableEncryption"], @(NO)) boolValue];
     logLevel = nilCoalescing([defaults objectForKey:@"logLevel"], @"none");
     localPort = [nilCoalescing([defaults objectForKey:@"localPort"], @1081) integerValue]; //use 1081 as default local port
@@ -363,7 +365,7 @@ static AppDelegate *appDelegate;
     shareOverLan = [nilCoalescing([defaults objectForKey:@"shareOverLan"],@(NO)) boolValue];
     dnsString = nilCoalescing([defaults objectForKey:@"dnsString"], @"localhost");
     _enableRestore = [nilCoalescing([defaults objectForKey:@"enableRestore"],@(NO)) boolValue];
-    
+
     profiles = [[NSMutableArray alloc] init];
     if ([defaults objectForKey:@"profiles"] && [[defaults objectForKey:@"profiles"] isKindOfClass:[NSArray class]]) {
         if (!_enableEncryption) {
@@ -380,7 +382,7 @@ static AppDelegate *appDelegate;
             }
         }
     }
-    
+
     cusProfiles = [[NSMutableArray alloc] init];
     if ([[defaults objectForKey:@"cusProfiles"] isKindOfClass:[NSArray class]] && [[defaults objectForKey:@"cusProfiles"] count] > 0) {
         for (id cusPorfile in [defaults objectForKey:@"cusProfiles"]) {
@@ -389,7 +391,7 @@ static AppDelegate *appDelegate;
             }
         }
     }
-    
+
     _subscriptions = [[NSMutableArray alloc] init];
     if ([defaults objectForKey:@"subscriptions"] && [[defaults objectForKey:@"subscriptions"] isKindOfClass:[NSArray class]]) {
         for (NSString* link in [defaults objectForKey:@"subscriptions"]) {
@@ -398,7 +400,7 @@ static AppDelegate *appDelegate;
             }
         }
     }
-    
+
     _routingRuleSets = [@[ROUTING_GLOBAL, ROUTING_BYPASSCN_PRIVATE_APPLE, ROUTING_DIRECT] mutableDeepCopy];
     if ([[defaults objectForKey:@"routingRuleSets"] isKindOfClass:[NSArray class]] && [[defaults objectForKey:@"routingRuleSets"] count] > 0) {
         _routingRuleSets = [[defaults objectForKey:@"routingRuleSets"] mutableDeepCopy];
@@ -410,6 +412,7 @@ static AppDelegate *appDelegate;
     @{
       @"setingVersion": [NSNumber numberWithInteger:kV2RayXSettingVersion],
       @"appStatus": @{
+              @"launchAtLogin": [NSNumber numberWithBool:NO],
               @"proxyState": [NSNumber numberWithBool:NO],
               @"proxyMode": @(manualMode),
               @"selectedServerIndex": [NSNumber numberWithInteger:0],
@@ -444,6 +447,7 @@ static AppDelegate *appDelegate;
 
 - (void)saveAppStatus {
     NSDictionary* status = @{
+                             @"launchAtLogin": @(launchAtLogin),
                              @"proxyState": @(proxyState),
                              @"proxyMode": @(proxyMode),
                              @"selectedServerIndex": @(selectedServerIndex),
@@ -567,7 +571,7 @@ static AppDelegate *appDelegate;
     }
     selectedCusServerIndex = MIN((NSInteger)cusProfiles.count - 1, selectedCusServerIndex );
     _selectedRoutingSet = MIN((NSInteger)_routingRuleSets.count - 1, _selectedRoutingSet);
-    
+
     NSLog(@"%ld, %ld", selectedServerIndex, selectedCusServerIndex);
     if ((!useMultipleServer && selectedServerIndex == -1 && selectedCusServerIndex == -1) || (useMultipleServer && profiles.count + _subsOutbounds.count < 1)) {
         proxyState = false;
@@ -625,13 +629,14 @@ static AppDelegate *appDelegate;
     [_pacModeItem setState:proxyMode == pacMode];
     [_manualModeItem setState:proxyMode == manualMode];
     [_globalModeItem setState:proxyMode == globalMode];
+    [_launchAtLoginItem setState: launchAtLogin];
 }
 
 - (void)updatePacMenuList {
     NSLog(@"updatePacMenuList");
     [_pacListMenu removeAllItems];
     NSString *pacDir = [NSString stringWithFormat:@"%@/Library/Application Support/V2RayX/pac", NSHomeDirectory()];
-    
+
     NSFileManager *manager = [NSFileManager defaultManager];
     NSArray *allPath =[manager subpathsAtPath:pacDir];
     int i = 0;
@@ -854,7 +859,7 @@ static AppDelegate *appDelegate;
 }
 
 - (void)hotkeyChangeProxyMode {
-    
+
     dispatch_async(dispatch_get_main_queue(), ^{
         [self didChangeStatus:self->_enableV2rayItem];
         if(self->proxyState == YES) {
@@ -874,7 +879,7 @@ static AppDelegate *appDelegate;
     tosat.message = message;
     [tosat showWindow:self];
     [tosat fadeInHud];
-    
+
 }
 
 - (IBAction)showConfigWindow:(id)sender {
@@ -893,13 +898,13 @@ static AppDelegate *appDelegate;
     [formatter setDateFormat:@"dd-MM-yyyy HH:mm"];
     NSDate *currentDate = [NSDate date];
     NSString *dateString = [formatter stringFromDate:currentDate];
-    
+
     NSMutableDictionary *backup = [[NSMutableDictionary alloc] init];
     backup[@"outbounds"] = self.profiles;
     backup[@"routings"] = self.routingRuleSets;
     NSData* backupData = [NSJSONSerialization dataWithJSONObject:backup options:NSJSONWritingPrettyPrinted error:nil];
     NSString* backupPath = [NSString stringWithFormat:@"%@/v2rayx_backup_%@.json", NSHomeDirectory(), dateString];
-    
+
     [backupData writeToFile:backupPath atomically:YES];
     [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[[NSURL fileURLWithPath:backupPath]]];
 }
@@ -949,14 +954,14 @@ static AppDelegate *appDelegate;
     fullConfig[@"inbounds"][0][@"settings"][@"udp"] = [NSNumber numberWithBool:udpSupport];
     fullConfig[@"inbounds"][1][@"port"] = @(httpPort);
     fullConfig[@"inbounds"][1][@"listen"] = shareOverLan ? @"0.0.0.0" : @"127.0.0.1";
-    
+
     NSArray* dnsArray = [dnsString componentsSeparatedByString:@","];
     if ([dnsArray count] > 0) {
         fullConfig[@"dns"][@"servers"] = dnsArray;
     } else {
         fullConfig[@"dns"][@"servers"] = @[@"localhost"];
     }
-    
+
     // deal with outbound
     NSMutableDictionary* configOutboundDict = [[NSMutableDictionary alloc] init];
     NSMutableDictionary* allUniqueTagOutboundDict = [[NSMutableDictionary alloc] init]; // make sure tag is unique
@@ -971,7 +976,7 @@ static AppDelegate *appDelegate;
     NSArray* allProxyTags = allUniqueTagOutboundDict.allKeys;
     allUniqueTagOutboundDict[@"direct"] = OUTBOUND_DIRECT;
     allUniqueTagOutboundDict[@"decline"] = OUTBOUND_DECLINE;
-    
+
     fullConfig[@"routing"] = [_routingRuleSets[_selectedRoutingSet] mutableDeepCopy];
     if (!useMultipleServer) {
         // replace tag main with current selected outbound tag
@@ -989,7 +994,7 @@ static AppDelegate *appDelegate;
                 [aRule setObject:@"balance" forKey:@"balancerTag"];
             }
         }
-        
+
     }
 
 //    NSLog(@"%@", allOutbounds);
@@ -1047,12 +1052,30 @@ static AppDelegate *appDelegate;
         }
     }
     return cusV2ray;
-    
+
+}
+- (void)setSettingOfLaunchAtLogin:(BOOL)enabled
+{
+    static NSString* bundleID = @"cenmrev.V2RayX.LaunchHelper";
+
+    if (SMLoginItemSetEnabled((__bridge CFStringRef)bundleID,enabled)) {
+        launchAtLogin = enabled;
+        NSLog(@"Call SMLoginItemSetEnabled with [%hhd] success", enabled);
+    } else {
+        NSLog(@"Call SMLoginItemSetEnabled with [%hhd] failed", enabled);
+    }
+    [self updateMenus];
 }
 
 - (IBAction)authorizeV2sys:(id)sender {
     [self installHelper:true];
 }
+
+- (IBAction)launchAtLoginAction:(id)sender {
+   [self setSettingOfLaunchAtLogin:!launchAtLogin];
+    NSLog(@"launchAtLoginAction clicked");
+}
+
 
 - (IBAction)viewLog:(id)sender {
     if (!useCusProfile) {
@@ -1138,6 +1161,7 @@ int runCommandLine(NSString* launchPath, NSArray* arguments) {
 
 @synthesize logDirPath;
 
+@synthesize launchAtLogin;
 @synthesize proxyState;
 @synthesize proxyMode;
 @synthesize localPort;
