@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		071BA04B26E8BA9F006C5E67 /* LaunchHelper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 07FA501226E8A7D70034C8BC /* LaunchHelper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		07E3384226E9FAB900109B3A /* LaunchHelper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 07E3384126E9FAB900109B3A /* LaunchHelper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		07FA501626E8A7D70034C8BC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 07FA501526E8A7D70034C8BC /* AppDelegate.m */; };
 		07FA501826E8A7DA0034C8BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07FA501726E8A7DA0034C8BC /* Assets.xcassets */; };
 		07FA501B26E8A7DA0034C8BC /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07FA501926E8A7DA0034C8BC /* MainMenu.xib */; };
@@ -79,7 +79,7 @@
 			dstPath = Contents/Library/LoginItems;
 			dstSubfolderSpec = 1;
 			files = (
-				071BA04B26E8BA9F006C5E67 /* LaunchHelper.app in CopyFiles */,
+				07E3384226E9FAB900109B3A /* LaunchHelper.app in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +125,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		077BF85726E9F46F00E6CAF7 /* LaunchHelper.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; path = LaunchHelper.app; sourceTree = "<group>"; };
+		07E3384126E9FAB900109B3A /* LaunchHelper.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; name = LaunchHelper.app; path = "../../../../Library/Developer/Xcode/DerivedData/V2RayX-gkxseqmxmojqfzfgwqdrifpycoub/Build/Products/Release/LaunchHelper.app"; sourceTree = "<group>"; };
 		07FA501226E8A7D70034C8BC /* LaunchHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LaunchHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07FA501426E8A7D70034C8BC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		07FA501526E8A7D70034C8BC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -266,6 +268,8 @@
 		9504C06F1C662C3000352520 = {
 			isa = PBXGroup;
 			children = (
+				077BF85726E9F46F00E6CAF7 /* LaunchHelper.app */,
+				07E3384126E9FAB900109B3A /* LaunchHelper.app */,
 				95862BD41DB2862E00F4A9CA /* compilefromsource.sh */,
 				9D7DFE521EBEC947001FECBD /* jsonplist */,
 				07FA501326E8A7D70034C8BC /* LaunchHelper */,

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -33,14 +33,14 @@
         <window title="V2RayX" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="551" height="474"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="contentRect" x="196" y="240" width="567" height="539"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
             <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="551" height="474"/>
+                <rect key="frame" x="0.0" y="0.0" width="567" height="539"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HKJ-PD-NRo">
-                        <rect key="frame" x="18" y="434" width="117" height="17"/>
+                        <rect key="frame" x="18" y="499" width="117" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Local Socks5 Port:" id="FRd-8H-tqe">
                             <font key="font" metaFont="system"/>
@@ -49,7 +49,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2do-qQ-ANK">
-                        <rect key="frame" x="141" y="431" width="74" height="22"/>
+                        <rect key="frame" x="141" y="496" width="74" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="jN0-7e-Eex">
                             <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="mKI-i3-kT1"/>
@@ -67,7 +67,7 @@
                         </connections>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aVm-xn-0cZ">
-                        <rect key="frame" x="141" y="405" width="74" height="22"/>
+                        <rect key="frame" x="141" y="470" width="74" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="El5-ad-Gfy">
                             <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="0tK-Bn-uaM"/>
@@ -85,7 +85,7 @@
                         </connections>
                     </textField>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZkQ-S8-swW">
-                        <rect key="frame" x="239" y="433" width="102" height="18"/>
+                        <rect key="frame" x="239" y="498" width="102" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Support UDP" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="pEW-Gw-3ph">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -96,7 +96,7 @@
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="749" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="reb-n0-jKg">
-                        <rect key="frame" x="18" y="379" width="382" height="17"/>
+                        <rect key="frame" x="18" y="444" width="382" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="If the local port is changed, the pac file also needs manual modification." id="nRL-kf-uam">
                             <font key="font" metaFont="smallSystem"/>
@@ -105,7 +105,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lgk-bl-Vga">
-                        <rect key="frame" x="18" y="354" width="35" height="17"/>
+                        <rect key="frame" x="18" y="419" width="35" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="DNS:" id="sKs-KL-14B">
                             <font key="font" metaFont="system"/>
@@ -114,7 +114,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mXE-pr-Ddc">
-                        <rect key="frame" x="59" y="352" width="401" height="22"/>
+                        <rect key="frame" x="59" y="417" width="401" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="jCM-1U-byE">
                             <font key="font" metaFont="system"/>
@@ -126,7 +126,7 @@
                         </connections>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="749" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ecy-ho-llN">
-                        <rect key="frame" x="18" y="329" width="382" height="17"/>
+                        <rect key="frame" x="18" y="394" width="382" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="seperated by comma(,)" id="5N8-C0-QJV">
                             <font key="font" metaFont="smallSystem"/>
@@ -146,20 +146,19 @@
                     <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="18l-QB-TVo">
                         <rect key="frame" x="20" y="113" width="140" height="183"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <clipView key="contentView" ambiguous="YES" drawsBackground="NO" id="0kH-bt-ahk">
+                        <clipView key="contentView" drawsBackground="NO" id="0kH-bt-ahk">
                             <rect key="frame" x="1" y="1" width="138" height="181"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" id="fje-9q-W5F">
                                     <rect key="frame" x="0.0" y="0.0" width="138" height="181"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn width="135" minWidth="40" maxWidth="1000" id="KrX-3H-19h">
+                                        <tableColumn width="97" minWidth="40" maxWidth="1000" id="KrX-3H-19h">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Server list">
-                                                <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                             </tableHeaderCell>
@@ -191,7 +190,7 @@
                     <box fixedFrame="YES" borderType="line" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="2Sy-sC-XkW">
                         <rect key="frame" x="169" y="90" width="365" height="208"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <view key="contentView" ambiguous="YES" id="de9-ID-Jky">
+                        <view key="contentView" id="de9-ID-Jky">
                             <rect key="frame" x="3" y="3" width="359" height="202"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
@@ -446,7 +445,7 @@
                         </view>
                     </box>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HGo-i2-l4d">
-                        <rect key="frame" x="371" y="433" width="119" height="18"/>
+                        <rect key="frame" x="371" y="498" width="119" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Share Over LAN" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="TXX-VD-4P4">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -457,7 +456,7 @@
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jbe-gs-AvT">
-                        <rect key="frame" x="18" y="408" width="100" height="17"/>
+                        <rect key="frame" x="18" y="473" width="100" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Local Http Port:" id="eGi-xf-mFk">
                             <font key="font" metaFont="system"/>
@@ -585,17 +584,42 @@ Gw
                             <action selector="showLog:" target="-2" id="y4o-h5-PjK"/>
                         </connections>
                     </button>
-                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kda-s5-ofw" customClass="MASShortcutView">
-                        <rect key="frame" x="373" y="404" width="115" height="23"/>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JbH-Q2-TUw">
+                        <rect key="frame" x="18" y="345" width="117" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="Load/Unload Core" id="JWV-p1-hs8">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <customView horizontalHuggingPriority="50" verticalHuggingPriority="50" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kda-s5-ofw" customClass="MASShortcutView">
+                        <rect key="frame" x="141" y="337" width="105" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="string" keyPath="associatedUserDefaultsKey" value="LoadUnloadCore"/>
                         </userDefinedRuntimeAttributes>
                     </customView>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JbH-Q2-TUw">
-                        <rect key="frame" x="239" y="405" width="114" height="17"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" title="Load/Unload Core" id="JWV-p1-hs8">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CVA-au-OA7">
+                        <rect key="frame" x="18" y="369" width="99" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Shortcut Key" id="K3R-qj-0vA">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <customView horizontalHuggingPriority="50" verticalHuggingPriority="50" fixedFrame="YES" placeholderIntrinsicWidth="115" placeholderIntrinsicHeight="30" translatesAutoresizingMaskIntoConstraints="NO" id="RRf-tH-OnI" customClass="MASShortcutView">
+                        <rect key="frame" x="390" y="337" width="122" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="associatedUserDefaultsKey" value="SelectMode"/>
+                        </userDefinedRuntimeAttributes>
+                    </customView>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p2c-TQ-AYN">
+                        <rect key="frame" x="277" y="345" width="107" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="Pac/Global Mode" id="PDk-3H-1WX">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -603,7 +627,7 @@ Gw
                     </textField>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="73.5" y="128"/>
+            <point key="canvasLocation" x="81.5" y="160.5"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="I7n-bF-Cph"/>
         <menuItem title="Item" id="tLs-gB-gFx">
@@ -634,7 +658,7 @@ Gw
                     </connections>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="-56" y="476"/>
+            <point key="canvasLocation" x="-404" y="604"/>
         </menu>
         <customView id="jV2-ec-trE">
             <rect key="frame" x="0.0" y="0.0" width="163" height="96"/>
@@ -654,9 +678,9 @@ Gw
         </customView>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="11" height="11"/>
-        <image name="NSRemoveTemplate" width="11" height="11"/>
-        <image name="NSShareTemplate" width="11" height="16"/>
+        <image name="NSAddTemplate" width="14" height="13"/>
+        <image name="NSRemoveTemplate" width="14" height="4"/>
+        <image name="NSShareTemplate" width="15" height="17"/>
         <image name="config_duplicate" width="15" height="15"/>
     </resources>
 </document>

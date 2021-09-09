@@ -146,7 +146,8 @@ static AppDelegate *appDelegate;
 
     // Register global hotkey
     [ShortcutsController bindShortcuts];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(hotkeyChangeProxyMode) name:@"NOTIFY_LOAD_UNLOAD_SHORTCUT" object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(hotkeyChangeProxyState) name:@"NOTIFY_LOAD_UNLOAD_SHORTCUT" object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(hotkeyChangeProxyMode) name:@"NOTIFY_SELECT_MODE_SHORTCUT" object:nil];
 
     // initialize UI
     _statusBarItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
@@ -618,7 +619,7 @@ static AppDelegate *appDelegate;
     if (proxyState) {
         [_v2rayStatusItem setTitle:@"v2ray-core: loaded"];
         [_enableV2rayItem setTitle:@"Unload core"];
-        NSImage *icon = [NSImage imageNamed:@"statusBarIcon"];
+        NSImage *icon = [NSImage imageNamed:proxyMode == pacMode ? @"statusBarPacIcon" : @"statusBarGlobalIcon"];
         [icon setTemplate:YES];
         [_statusBarItem setImage:icon];
     } else {
@@ -858,11 +859,11 @@ static AppDelegate *appDelegate;
 //    });
 }
 
-- (void)hotkeyChangeProxyMode {
+- (void)hotkeyChangeProxyState {
 
     dispatch_async(dispatch_get_main_queue(), ^{
         [self didChangeStatus:self->_enableV2rayItem];
-        if(self->proxyState == YES) {
+        if(self->proxyState) {
             [self makeToast:@"V2Ray Load Core"];
         }
         else {
@@ -870,6 +871,22 @@ static AppDelegate *appDelegate;
         }
     });
 }
+
+- (void)hotkeyChangeProxyMode {
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+
+        if(self->proxyMode == pacMode) {
+            [self didChangeMode:self->_globalModeItem];
+            [self makeToast:@"V2Ray Global Mode"];
+        }
+        else {
+            [self didChangeMode:self->_pacModeItem];
+            [self makeToast:@"V2Ray Pac Mode"];
+        }
+    });
+}
+
 
 - (void)makeToast:(NSString *)message {
     if (tosat) {

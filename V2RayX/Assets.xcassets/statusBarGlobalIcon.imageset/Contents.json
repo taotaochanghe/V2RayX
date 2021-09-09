@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "b16.png",
+      "filename" : "b_global_16.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "b32.png",
+      "filename" : "b_global_32.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

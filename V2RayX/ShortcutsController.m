@@ -11,13 +11,17 @@
 
 @implementation ShortcutsController
 
-+ (void)bindShortcuts {
-    MASShortcutBinder* binder = [MASShortcutBinder sharedBinder];
-    [binder
-     bindShortcutWithDefaultsKey: @"LoadUnloadCore"
-     toAction:^{
-         [[NSNotificationCenter defaultCenter] postNotificationName: @"NOTIFY_LOAD_UNLOAD_SHORTCUT" object: nil];
-     }];
++ (void)bindShortcuts
+{
+    MASShortcutBinder *binder = [MASShortcutBinder sharedBinder];
+    [binder bindShortcutWithDefaultsKey:@"LoadUnloadCore" toAction:^
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"NOTIFY_LOAD_UNLOAD_SHORTCUT" object:nil];
+    }];
+    [binder bindShortcutWithDefaultsKey:@"SelectMode" toAction:^
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"NOTIFY_SELECT_MODE_SHORTCUT" object:nil];
+    }];
 }
 
 @end
